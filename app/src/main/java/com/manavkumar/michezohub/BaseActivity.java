@@ -80,18 +80,23 @@ public abstract class BaseActivity extends AppCompatActivity {
         Button submitBtn = (Button) findViewById(R.id.submitbtn);
         submitBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Toast.makeText(BaseActivity.this, "Done", Toast.LENGTH_LONG).show();
                 Map<String, String> map = new HashMap<>();
                 map.put("id", String.valueOf(BaseActivity.this.position));
                 map.put("name", BaseActivity.this.name);
                 Map<String, String> mapItem = categories.get(BaseActivity.this.position);
+
+                int remainingSlots = Integer.parseInt(mapItem.get(REMAINING_SLOTS)) - 1;
                 if (mapItem.containsKey(REMAINING_SLOTS)) {
-                    int remainingSlots = Integer.parseInt(mapItem.get(REMAINING_SLOTS)) - 1;
                     map.put(REMAINING_SLOTS, String.valueOf(remainingSlots));
                 } else {
                     map.put(REMAINING_SLOTS, String.valueOf(DEFAULT_NUM_SLOTS - 1));
                 }
-                database.child("locations").child("categories").child(category).child(String.valueOf(BaseActivity.this.position)).setValue(map);
+                if (remainingSlots > 0) {
+                    database.child("locations").child("categories").child(category).child(String.valueOf(BaseActivity.this.position)).setValue(map);
+                    Toast.makeText(BaseActivity.this, "Done", Toast.LENGTH_LONG).show();
+//                    return;
+                }
+//                Toast.makeText(BaseActivity.this, "No available slots", Toast.LENGTH_SHORT).show();
             }
         });
 

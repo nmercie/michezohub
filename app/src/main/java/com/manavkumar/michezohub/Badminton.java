@@ -19,43 +19,40 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.database.DatabaseReference;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.Map;
 
-public class Badminton extends AppCompatActivity {
+public class Badminton extends BaseActivity {
+    private final String category = "badminton";
+    private final int layout = R.layout.activity_badminton;
+
     Spinner spinner;
-    String[] items = {"Nairobi Gymkhana","The Goan Gymkhana", "Parklands Sports Club", "Oshwal Academy Nairobi - Primary", "Aga Khan Sports Centre", "Premier Club", "Annadil Jamaly Sports Complex", "Nairobi Jaffery Sports Club", "Ruaraka Sports Club" };
+    String[] items = {"Nairobi Gymkhana", "The Goan Gymkhana", "Parklands Sports Club", "Oshwal Academy Nairobi - Primary", "Aga Khan Sports Centre", "Premier Club", "Annadil Jamaly Sports Complex", "Nairobi Jaffery Sports Club", "Ruaraka Sports Club"};
     TextView pickDate;
 
     Button timeButton;
+    Button submitBtn;
+
     int hour, minute;
+    private DatabaseReference database;
+    private String position;
+    private String name;
+    private ArrayList<Map<String, String>> categories;
+    private TextView availableSlots;
+    private ArrayAdapter<String> adapter;
+
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_badminton);
 
-        spinner = findViewById(R.id.bSpinner);
         pickDate = findViewById(R.id.pick_date);
         timeButton = findViewById(R.id.time_button);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(Badminton.this, R.layout.item_file, items);
-        adapter.setDropDownViewResource(R.layout.item_file);
-        spinner.setAdapter(adapter);
-
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long l) {
-                String values = parent.getItemAtPosition(position).toString();
-                Toast.makeText(Badminton.this, values, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
 
         //Initialize Calendar
         Calendar calendar = Calendar.getInstance();
@@ -79,7 +76,7 @@ public class Badminton extends AppCompatActivity {
                         //Set date on text view
                         pickDate.setText(sDate);
                     }
-                }, year,month,day
+                }, year, month, day
                 );
                 //Disable Past Date
                 datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
@@ -96,7 +93,7 @@ public class Badminton extends AppCompatActivity {
             public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                 hour = selectedHour;
                 minute = selectedMinute;
-                timeButton.setText(String.format(Locale.getDefault(),"%02d %02d", hour, minute));
+                timeButton.setText(String.format(Locale.getDefault(), "%02d %02d", hour, minute));
             }
         };
 
@@ -106,5 +103,15 @@ public class Badminton extends AppCompatActivity {
 
         timePickerDialog.setTitle("Select Time");
         timePickerDialog.show();
+    }
+
+    @Override
+    public String getCategory() {
+        return category;
+    }
+
+    @Override
+    public int getLayout() {
+        return layout;
     }
 }
