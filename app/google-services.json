@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "238157368839",
+    "firebase_url": "https://michezohub-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "michezohub",
+    "storage_bucket": "michezohub.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:238157368839:android:ecfda3cda2fd74aa0264a2",
+        "android_client_info": {
+          "package_name": "com.manavkumar.michezohub"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "238157368839-l29mcg8pnbkm3md59cnuotcr9n4ssh72.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpJoqdfx4a85L5RTOpjYb1awYMVhBGnc8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "238157368839-l29mcg8pnbkm3md59cnuotcr9n4ssh72.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Badminton"
+    android:orientation="vertical"
+    android:background="@drawable/badminton1">
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#25000000"
+        android:textAlignment="center" />
+
+    <TextView
+        android:id="@+id/hBadminton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#C6EAB61A"
+        android:text="Sport - Badminton"
+        android:textAlignment="center"
+        android:textSize="40dp"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="7dp" />
+
+   <TextView
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:text="Select Location"
+       android:layout_below="@+id/hBadminton"
+       android:textColor="@color/white"
+       android:textAlignment="center"
+       android:textSize="20dp"
+       android:layout_centerHorizontal="true"
+       android:layout_marginTop="20dp"
+       android:id="@+id/txt"/>
+
+    <Spinner
+        android:id="@+id/bSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:spinnerMode="dialog"
+        android:layout_below="@id/txt"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:background="@android:drawable/btn_dropdown" />
+
+    <TextView
+        android:id="@+id/pick_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/bSpinner"
+        android:background="#2C5364"
+        android:gravity="center"
+        android:hint="Pick a Date"
+        android:textColor="@color/white"
+        android:textSize="20dp" />
+
+    <Button
+        android:id="@+id/time_button"
+        android:onClick="popTimePicker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pick_date"
+        android:text="Select Time"
+        android:textSize="30sp"
+        android:width="300dp"
+        android:height="100dp"/>
+
+</RelativeLayout>

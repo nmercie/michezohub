@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Basketball"
+    android:orientation="vertical"
+    android:background="@drawable/basketball1">
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#25000000"
+        android:textAlignment="center" />
+
+    <TextView
+        android:id="@+id/hBasketball"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#C6EAB61A"
+        android:text="Sport - Basketball"
+        android:textAlignment="center"
+        android:textSize="40dp"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="7dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Select Location"
+        android:layout_below="@+id/hBasketball"
+        android:textColor="@color/white"
+        android:textAlignment="center"
+        android:textSize="20dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:id="@+id/txt"/>
+    <LinearLayout
+        android:id="@+id/l2_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txt"
+        android:layout_marginTop="-1dp"
+        android:orientation="horizontal"
+        android:weightSum="5">
+
+        <Spinner
+            android:id="@+id/bSpinner"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txt"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:layout_weight="4"
+            android:background="@android:drawable/btn_dropdown"
+
+            android:spinnerMode="dialog" />
+        <TextView
+            android:id="@+id/available_slots"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:text=""
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="21sp"
+            android:layout_marginTop="20dp"
+            />
+    </LinearLayout>
+
+    <TextView
+            android:id="@+id/pick_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/l2_location"
+            android:background="#2C5364"
+            android:gravity="center"
+            android:hint="Pick a Date"
+            android:textColor="@color/white"
+            android:textSize="20dp" />
+
+    <Button
+        android:id="@+id/time_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pick_date"
+        android:width="300dp"
+        android:height="100dp"
+        android:onClick="popTimePicker"
+        android:text="Select Time"
+        android:textSize="30sp" />
+
+    <Button
+        android:id="@+id/submitbtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/time_button"
+        android:width="100dp"
+        android:height="100dp"
+        android:text="Submit"
+        android:textSize="30sp" />
+
+</RelativeLayout>
