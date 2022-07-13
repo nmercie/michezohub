@@ -37,22 +37,44 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:id="@+id/txt"/>
-
-    <Spinner
-        android:id="@+id/bSpinner"
+    <LinearLayout
+        android:id="@+id/l2_location"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/txt"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:background="@android:drawable/btn_dropdown"
-        android:spinnerMode="dialog" />
+        android:layout_marginTop="-1dp"
+        android:orientation="horizontal"
+        android:weightSum="5">
+
+        <Spinner
+            android:id="@+id/bSpinner"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txt"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:layout_weight="4"
+            android:background="@android:drawable/btn_dropdown"
+            android:spinnerMode="dialog" />
+        <TextView
+            android:id="@+id/available_slots"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:text=""
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="21sp"
+            android:layout_marginTop="20dp"
+            />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/pick_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/bSpinner"
+        android:layout_below="@id/l2_location"
         android:background="#2C5364"
         android:gravity="center"
         android:hint="Pick a Date"
@@ -61,13 +83,23 @@
 
     <Button
         android:id="@+id/time_button"
-        android:onClick="popTimePicker"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/pick_date"
-        android:text="Select Time"
-        android:textSize="30sp"
         android:width="300dp"
-        android:height="100dp"/>
+        android:height="100dp"
+        android:onClick="popTimePicker"
+        android:text="Select Time"
+        android:textSize="30sp" />
+
+    <Button
+        android:id="@+id/submitbtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/time_button"
+        android:width="100dp"
+        android:height="100dp"
+        android:text="Submit"
+        android:textSize="30sp" />
 
 </RelativeLayout>

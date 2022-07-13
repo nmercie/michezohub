@@ -31,15 +31,14 @@
         android:layout_height="wrap_content"
         android:text="Select Location"
         android:layout_below="@+id/hSquash"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textAlignment="center"
         android:textSize="20dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:id="@+id/txt"/>
-
     <LinearLayout
-        android:id="@+id/ll_location"
+        android:id="@+id/l2_location"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/txt"
@@ -51,17 +50,19 @@
             android:id="@+id/bSpinner"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_below="@id/txt"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
             android:layout_weight="4"
             android:background="@android:drawable/btn_dropdown"
             android:spinnerMode="dialog" />
-
         <TextView
             android:id="@+id/available_slots"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_weight="1"
-            android:text="1"
+            android:background="@color/white"
+            android:text=""
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="21sp"
@@ -73,7 +74,7 @@
         android:id="@+id/pick_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/ll_location"
+        android:layout_below="@id/l2_location"
         android:background="#2C5364"
         android:gravity="center"
         android:hint="Pick a Date"
@@ -89,6 +90,16 @@
         android:height="100dp"
         android:onClick="popTimePicker"
         android:text="Select Time"
+        android:textSize="30sp" />
+
+    <Button
+        android:id="@+id/submitbtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/time_button"
+        android:width="100dp"
+        android:height="100dp"
+        android:text="Submit"
         android:textSize="30sp" />
 
 </RelativeLayout>

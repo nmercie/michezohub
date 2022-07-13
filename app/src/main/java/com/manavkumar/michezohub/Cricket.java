@@ -16,42 +16,39 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.Map;
 
-public class Cricket extends AppCompatActivity {
+public class Cricket extends BaseActivity {
+    private final String category = "cricket";
+    private final int layout = R.layout.activity_cricket;
+
     Spinner spinner;
     String[] items = {"Nairobi Gymkhana", "Parklands Sports Club", "Aga Khan Sports Centre", "Premier Club", "Kenya Kongonis Cricket Club", "Parklands Cricket Ground", "Ruaraka Sports Club Ground", "Cutchi Leva Cricket Club"};
     TextView pickDate;
 
     Button timeButton;
+    Button submitBtn;
     int hour, minute;
+    private DatabaseReference database;
+    private String position;
+    private String name;
+    private ArrayList<Map<String, String>> categories;
+    private TextView availableSlots;
+    private ArrayAdapter<String> adapter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cricket);
 
-        spinner = findViewById(R.id.bSpinner);
+
         pickDate = findViewById(R.id.pick_date);
         timeButton = findViewById(R.id.time_button);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(Cricket.this, R.layout.item_file, items);
-        adapter.setDropDownViewResource(R.layout.item_file);
-        spinner.setAdapter(adapter);
-
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long l) {
-                String values = parent.getItemAtPosition(position).toString();
-                Toast.makeText(Cricket.this, values, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
 
         //Initialize Calendar
         Calendar calendar = Calendar.getInstance();
@@ -102,4 +99,14 @@ public class Cricket extends AppCompatActivity {
         timePickerDialog.setTitle("Select Time");
         timePickerDialog.show();
     }
+    @Override
+    public String getCategory() {
+        return category;
+    }
+
+    @Override
+    public int getLayout() { return layout;
+    }
 }
+
+

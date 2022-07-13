@@ -119,6 +119,7 @@ public class Athletics extends BaseActivity {
     }
 
     @Override
-    public int getLayout() { return layout;
+    public int getLayout() {
+        return layout;
     }
 }
