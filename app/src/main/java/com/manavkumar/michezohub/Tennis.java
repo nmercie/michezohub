@@ -16,42 +16,38 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.Map;
 
-public class Tennis extends AppCompatActivity {
+public class Tennis extends BaseActivity {
+    private final String category = "tennis";
+    private final int layout = R.layout.activity_tennis;
+
     Spinner spinner;
     String[] items = {"Nairobi Gymkhana","Nairobi Club Tennis Courts", "Parklands Sports Club Tennis Courts", "Lavington Tennis Court", "Agility Tennis Kenya", "German School Tennis Court", "St. Teresa's Table Tennis Club", "Karura Forest"};
     TextView pickDate;
 
     Button timeButton;
+    Button submitBtn;
     int hour, minute;
+    private DatabaseReference database;
+    private String position;
+    private String name;
+    private ArrayList<Map<String, String>> categories;
+    private TextView availableSlots;
+    private ArrayAdapter<String> adapter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tennis);
 
-        spinner = findViewById(R.id.bSpinner);
         pickDate = findViewById(R.id.pick_date);
         timeButton = findViewById(R.id.time_button);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(Tennis.this, R.layout.item_file, items);
-        adapter.setDropDownViewResource(R.layout.item_file);
-        spinner.setAdapter(adapter);
-
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long l) {
-                String values = parent.getItemAtPosition(position).toString();
-                Toast.makeText(Tennis.this, values, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
 
         //Initialize Calendar
         Calendar calendar = Calendar.getInstance();
@@ -101,5 +97,14 @@ public class Tennis extends AppCompatActivity {
 
         timePickerDialog.setTitle("Select Time");
         timePickerDialog.show();
+    }
+    @Override
+    public String getCategory() {
+        return category;
+    }
+
+    @Override
+    public int getLayout() {
+        return layout;
     }
 }

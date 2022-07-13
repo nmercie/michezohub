@@ -12,6 +12,10 @@
         <entry key="app/src/main/res/layout/activity_rugby.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_soccer.xml" value="0.17193609167028356" />
         <entry key="app/src/main/res/layout/activity_squash.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_swimming.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_tabletennis.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_tennis.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_volleyball.xml" value="0.1" />
         <entry key="app/src/main/res/layout/item_file.xml" value="0.1" />
       </map>
     </option>
