@@ -69,6 +69,7 @@
             android:textColor="@color/black"
             android:textSize="21sp" />
     </LinearLayout>
+    
     <TextView
         android:id="@+id/pick_date"
         android:layout_width="match_parent"

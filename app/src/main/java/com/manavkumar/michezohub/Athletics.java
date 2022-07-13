@@ -56,7 +56,7 @@ public class Athletics extends BaseActivity {
     private ArrayAdapter<String> adapter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         pickDate = findViewById(R.id.pick_date);

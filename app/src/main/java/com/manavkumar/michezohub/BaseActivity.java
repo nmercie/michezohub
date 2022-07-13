@@ -21,7 +21,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 import com.manavkumar.michezohub.model.Category;
 
 import org.json.JSONArray;
@@ -33,7 +35,7 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class BaseActivity extends AppCompatActivity {
-    private String position;
+    private int position;
     private String name;
     private List<Map<String, String>> categories;
     private DatabaseReference database;
@@ -45,8 +47,10 @@ public abstract class BaseActivity extends AppCompatActivity {
     private int layout;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(this.getLayout());
+        category = this.getCategory();
 
         database = ((AppController) getApplication()).getDatabase();
 
@@ -55,13 +59,15 @@ public abstract class BaseActivity extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long l) {
-                BaseActivity.this.position = String.valueOf(position);
+                BaseActivity.this.position = position;
                 String values = parent.getItemAtPosition(position).toString();
                 BaseActivity.this.name = values;
                 Toast.makeText(BaseActivity.this, values, Toast.LENGTH_SHORT).show();
                 Map<String, String> map = BaseActivity.this.categories.get(position);
                 if (map.containsKey(REMAINING_SLOTS)) {
                     availableSlots.setText(map.get(REMAINING_SLOTS));
+                } else {
+                    availableSlots.setText(String.valueOf(DEFAULT_NUM_SLOTS));
                 }
             }
 
@@ -76,20 +82,52 @@ public abstract class BaseActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Toast.makeText(BaseActivity.this, "Done", Toast.LENGTH_LONG).show();
                 Map<String, String> map = new HashMap<>();
-                map.put("id", BaseActivity.this.position);
+                map.put("id", String.valueOf(BaseActivity.this.position));
                 map.put("name", BaseActivity.this.name);
-                Map<String, String> mapItem = categories.get(Integer.parseInt(BaseActivity.this.position));
+                Map<String, String> mapItem = categories.get(BaseActivity.this.position);
                 if (mapItem.containsKey(REMAINING_SLOTS)) {
                     int remainingSlots = Integer.parseInt(mapItem.get(REMAINING_SLOTS)) - 1;
                     map.put(REMAINING_SLOTS, String.valueOf(remainingSlots));
                 } else {
                     map.put(REMAINING_SLOTS, String.valueOf(DEFAULT_NUM_SLOTS - 1));
                 }
-                database.child("locations").child("categories").child("basketball").child(BaseActivity.this.position).setValue(map);
+                database.child("locations").child("categories").child(category).child(String.valueOf(BaseActivity.this.position)).setValue(map);
             }
         });
 
-        database.child("locations").child("categories").child(this.category).child(this.getCategory())
+        database.child("locations").child("categories").child(this.getCategory())
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        categories = (ArrayList<Map<String, String>>) snapshot.getValue();
+                        items = new String[categories.size()];
+
+                        for (int i = 0; i < categories.size(); i++) {
+                            Map<String, String> entry = categories.get(i);
+                            items[i] = entry.get("name");
+                            Map<String, String> map = categories.get(i);
+                            if (map.containsKey(REMAINING_SLOTS)) {
+                                availableSlots.setText(map.get(REMAINING_SLOTS));
+                            } else {
+                                availableSlots.setText(String.valueOf(DEFAULT_NUM_SLOTS));
+                            }
+                        }
+
+                        if (adapter != null) {
+                            adapter.notifyDataSetChanged();
+                        } else {
+                            adapter = new ArrayAdapter<String>(BaseActivity.this, R.layout.item_file, items);
+                            adapter.setDropDownViewResource(R.layout.item_file);
+                            spinner.setAdapter(adapter);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+        database.child("locations").child("categories").child(this.getCategory())
                 .get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DataSnapshot> task) {
