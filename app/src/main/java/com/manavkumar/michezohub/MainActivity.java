@@ -1,15 +1,29 @@
 package com.manavkumar.michezohub;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.NavigationUI;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ShareActionProvider;
+import android.widget.TextView;
 
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
@@ -20,6 +34,39 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+//        AppBarLayout appBarLayout = findViewById(R.id.toolbarnav);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+
+        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host);
+        NavController navController = navHostFragment.getNavController();
+
+        NavigationUI.setupActionBarWithNavController(this, navController, findViewById(R.id.drawer_layout));
+
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        NavigationUI.setupWithNavController(navigationView, navController);
+
+        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
+                R.string.open, R.string.close);
+
+        drawerLayout.addDrawerListener(toggle);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch(item.getItemId()){
+                    case R.id.nav_logout:
+                        logout();
+                        break;
+                    case R.id.nav_booked_location:
+                        startActivity(new Intent(MainActivity.this, BookedLocationsActivity.class));
+                }
+                return false;
+            }
+        });
 
         //Initializing
         mAuth = FirebaseAuth.getInstance();
@@ -140,6 +187,18 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        SharedPreferences preferences = ((AppController) getApplicationContext()).getPreferences();
+        String name = preferences.getString("name", "");
+        String email = preferences.getString("email", "");
+
+        View headerView = navigationView.getHeaderView(0);
+
+        TextView tvName = headerView.findViewById(R.id.title_nav_header);
+        tvName.setText(name);
+
+        TextView tvEmail = headerView.findViewById(R.id.textView);
+        tvEmail.setText(email);
     }
 
     @Override

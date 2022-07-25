@@ -42,6 +42,20 @@ public class LoginActivity extends AppCompatActivity {
                 Login();
             }
         });
+
+        textforgot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(LoginActivity.this, PasswordActivity.class));
+            }
+        });
+
+        textRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+            }
+        });
     }
 
     private void Login() {
@@ -64,20 +78,6 @@ public class LoginActivity extends AppCompatActivity {
                     else{
                         Toast.makeText(LoginActivity.this, "Login Failed" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }
-                }
-            });
-
-            textforgot.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    startActivity(new Intent(LoginActivity.this, PasswordActivity.class));
-                }
-            });
-
-            textRegister.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
                 }
             });
         }

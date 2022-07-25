@@ -20,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -92,7 +93,13 @@ public abstract class BaseActivity extends AppCompatActivity {
                     map.put(REMAINING_SLOTS, String.valueOf(DEFAULT_NUM_SLOTS - 1));
                 }
                 if (remainingSlots > 0) {
-                    database.child("locations").child("categories").child(category).child(String.valueOf(BaseActivity.this.position)).setValue(map);
+                    database.child("locations").child("categories").child(category)
+                            .child(String.valueOf(BaseActivity.this.position)).setValue(map);
+
+                    String uid = FirebaseAuth.getInstance().getUid();
+                    if (uid != null) {
+                        database.child("users").child(uid).push().setValue(map);
+                    }
                     Toast.makeText(BaseActivity.this, "Done", Toast.LENGTH_LONG).show();
 //                    return;
                 }
