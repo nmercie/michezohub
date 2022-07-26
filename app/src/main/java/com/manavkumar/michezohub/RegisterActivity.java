@@ -25,6 +25,7 @@ import com.google.firebase.database.DatabaseReference;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class RegisterActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
@@ -78,8 +79,8 @@ public class RegisterActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         email = findViewById(R.id.register_email);
         password = findViewById(R.id.register_password);
-        firstname =(EditText)findViewById(R.id.first_name);
-        lastname =(EditText)findViewById(R.id.last_name);
+        firstname = (EditText) findViewById(R.id.first_name);
+        lastname = (EditText) findViewById(R.id.last_name);
         date = findViewById(R.id.date);
         btnRegister = findViewById(R.id.register);
         textLogin = findViewById(R.id.text_login);
@@ -106,31 +107,30 @@ public class RegisterActivity extends AppCompatActivity {
         String last_name = lastname.getText().toString().trim();
         String dob = date.getText().toString().trim();
 
-        if (user.isEmpty()){ //Warning popup for empty email box
+        if (user.isEmpty()) { //Warning popup for empty email box
             email.setError("Email can not be empty");
         }
-       if (first_name.isEmpty()) {
+        if (first_name.isEmpty()) {
             Toast t = Toast.makeText(this, "You must enter first name to register!", Toast.LENGTH_SHORT);
-           t.show();
-        }
-      if (last_name.isEmpty()){ //Warning popup for empty firstname box
-           Toast t = Toast.makeText(this, "You must enter last name to register!", Toast.LENGTH_SHORT);
             t.show();
         }
-       if (dob.isEmpty()){ //Warning popup for empty firstname box
+        if (last_name.isEmpty()) { //Warning popup for empty firstname box
+            Toast t = Toast.makeText(this, "You must enter last name to register!", Toast.LENGTH_SHORT);
+            t.show();
+        }
+        if (dob.isEmpty()) { //Warning popup for empty firstname box
             Toast t = Toast.makeText(this, "You must enter date to register!", Toast.LENGTH_SHORT);
             t.show();
         }
-        if (pass.isEmpty()){ //Warning popup for empty password box
+        if (pass.isEmpty()) { //Warning popup for empty password box
             password.setError("Incorrect Password or can not be empty");
-        }
-        else{
+        } else {
             mAuth.createUserWithEmailAndPassword(user, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (task.isSuccessful()){
-                        String uid = FirebaseAuth.getInstance().getUid();
-                        Map<String, String> map = new HashMap<String, String>();
+                    if (task.isSuccessful()) {
+                        String uid = Objects.requireNonNull(task.getResult().getUser()).getUid();
+                        Map<String, String> map = new HashMap<>();
                         map.put("id", uid);
                         map.put("first_name", firstname.getText().toString());
                         map.put("last_name", lastname.getText().toString());
@@ -144,14 +144,12 @@ public class RegisterActivity extends AppCompatActivity {
                                 .putString("email", user)
                                 .apply();
 
-                        if (uid != null) {
-                            database.child("users").push().child(uid).setValue(map);
-                        }
-                        Toast.makeText(RegisterActivity.this,"User Registered Successfully", Toast.LENGTH_SHORT).show();
+                        database.child("users").push().child(uid).setValue(map);
+
+                        Toast.makeText(RegisterActivity.this, "User Registered Successfully", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(RegisterActivity.this, MainActivity.class));
-                    }
-                    else{
-                        Toast.makeText(RegisterActivity.this,"Registration Failed" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(RegisterActivity.this, "Registration Failed" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
             });
