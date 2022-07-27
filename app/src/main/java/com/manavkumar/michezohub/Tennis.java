@@ -67,7 +67,7 @@ public class Tennis extends BaseActivity {
                     @Override
                     public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
                         //Store date in string
-                        String sDate = dayOfMonth + "/" + month + "/" + year;
+                        String sDate = dayOfMonth + "/" + (month +1) + "/" + year;
                         //Set date on text view
                         pickDate.setText(sDate);
                     }

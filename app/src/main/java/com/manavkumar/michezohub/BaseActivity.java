@@ -86,12 +86,15 @@ public abstract class BaseActivity extends AppCompatActivity {
                 map.put("name", BaseActivity.this.name);
                 Map<String, String> mapItem = categories.get(BaseActivity.this.position);
 
-                int remainingSlots = Integer.parseInt(mapItem.get(REMAINING_SLOTS)) - 1;
+                int remainingSlots;
                 if (mapItem.containsKey(REMAINING_SLOTS)) {
+                    remainingSlots = Integer.parseInt(mapItem.get(REMAINING_SLOTS)) - 1;
                     map.put(REMAINING_SLOTS, String.valueOf(remainingSlots));
                 } else {
-                    map.put(REMAINING_SLOTS, String.valueOf(DEFAULT_NUM_SLOTS - 1));
+                    remainingSlots = DEFAULT_NUM_SLOTS - 1;
+                    map.put(REMAINING_SLOTS, String.valueOf(remainingSlots));
                 }
+
                 if (remainingSlots > 0) {
                     database.child("locations").child("categories").child(category)
                             .child(String.valueOf(BaseActivity.this.position)).setValue(map);
