@@ -98,7 +98,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
                     String uid = FirebaseAuth.getInstance().getUid();
                     if (uid != null) {
-                        database.child("users").child(uid).push().setValue(map);
+                        database.child("users").child(uid).child("locations").push().setValue(map);
                     }
                     Toast.makeText(BaseActivity.this, "Done", Toast.LENGTH_LONG).show();
 //                    return;

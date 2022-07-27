@@ -37,8 +37,8 @@ public class BookedLocationsAdapter extends RecyclerView.Adapter<BookedLocationV
         locationName.setText(map.get("name"));
     }
 
-    public void setBookedLocations(List<Map<String, String>> bookedLocations) {
-        this.bookedLocations = bookedLocations;
+    public void setBookedLocations(Map<String,Map<String, String>> bookedLocations) {
+        this.bookedLocations = new ArrayList<>(bookedLocations.values());
         notifyDataSetChanged();
     }
 

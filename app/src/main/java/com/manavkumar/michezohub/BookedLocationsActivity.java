@@ -17,6 +17,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -46,10 +47,10 @@ public class BookedLocationsActivity extends AppCompatActivity {
                     .addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            List<Map<String, String>> bookedLocations =
-                                    (List<Map<String, String>>) snapshot.getValue();
+                            Map<String,Map<String, String>> bookedLocations =
+                                    (Map<String,Map<String, String>>) snapshot.getValue();
 
-                            bookedLocationsAdapter.setBookedLocations(bookedLocations != null ? bookedLocations : new ArrayList<>());
+                            bookedLocationsAdapter.setBookedLocations(bookedLocations != null ? bookedLocations : new HashMap<>());
                         }
 
                         @Override
@@ -62,10 +63,10 @@ public class BookedLocationsActivity extends AppCompatActivity {
                     .get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<DataSnapshot> task) {
-                            List<Map<String, String>> bookedLocations =
-                                    (List<Map<String, String>>) task.getResult().getValue();
+                            Map<String,Map<String, String>> bookedLocations =
+                                    (Map<String,Map<String, String>>) task.getResult().getValue();
 
-                            bookedLocationsAdapter.setBookedLocations(bookedLocations != null ? bookedLocations : new ArrayList<>());
+                            bookedLocationsAdapter.setBookedLocations(bookedLocations != null ? bookedLocations : new HashMap<>());
                         }
                     });
         }
